@@ -1,55 +1,55 @@
-# Weather API Service
-Сервис для получения текущей погоды по названию города с кэшированием в Redis. Использует бесплатный Open-Meteo API (без регистрации и ключей).
+# Weather App
 
-## Требования
-- python3.12+
-- redis7+
+Это приложение показывает погоду по городу.  
+Берёт данные из Open-Meteo API и кэширует в Redis, чтобы не использовать API каждый раз.
 
-## Локальная установка
-1) Склонировать репозиторий
-```bash
-git clone git@github.com:AnastasiyaGapochkina01/wheather-app.git
-cd wheather-app
-```
-2) Установить redis
-```bash
-sudo apt install redis-server
-```
-3) Установить зависимости
-```bash
-pip install -r app/requirements.txt
-```
-4) Запустить
-```bash
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-```
+## Что тут происходит
 
-### Проверка
-```bash
-curl http://localhost:8000/health
+- FastAPI приложение
+- Dockerized (есть Dockerfile)
+- CI/CD на GitHub Actions:
+  - ставит пакеты (install)
+  - проверяет код (lint через pylint)
+  - запускает тесты (pytest)
+  - строит Docker-образ и пушит его в ghcr.io
 
-curl "http://localhost:8000/weather?lat=55.7558&lon=37.6173"
-```
-Пример ответа
-```json
-{
-  "location": {
-    "name": "Москва",
-    "lat": 55.7558,
-    "lon": 37.6173,
-    "country": "Russia"
-  },
-  "current": {
-    "temperature_2m": -5.2,
-    "relative_humidity_2m": 78,
-    "wind_speed_10m": 3.5,
-    "weather_code": 3,
-    "time": "2026-01-28T06:00"
-  }
-}
-```
+Всё запускается автоматически при пуше в main.  
+Lint и test работают параллельно для оптимизации.
 
-Swagger UI
-```bash
-curl http://localhost:8000/docs
-```
+## Почему ghcr.io
+
+Образы пушатся в GitHub Container Registry (ghcr.io), а не в Docker Hub, потому что:
+- не нужен отдельный аккаунт — работает через встроенный GITHUB_TOKEN
+- бесплатно
+- удобно смотреть, из какого коммита образ собран
+
+## Как запустить локально
+
+1. git clone https://github.com/serjiy/weather-app.git
+2. cd weather-app
+3. docker build -t weather-app .
+4. docker run -p 8000:8000 weather-app
+
+Открыть http://localhost:8000
+
+## PS
+
+- Параллельные джобы — lint и test запускаются одновременно
+- Docker-образ тут: https://github.com/serjiy/weather-app/packages
+
+Что было сделано:
+
+Создал репозиторий на GitHub: https://github.com/serjiy/weather-app
+Взял исходный проект https://github.com/AnastasiyaGapochkina01/wheather-app и перенёс его к себе.
+Добавил Dockerfile — для запуска в контейнере.
+Настроил GitHub Actions (это CI/CD) — файл .github/workflows/ci-cd.yml
+Pipeline делает следующее:
+install — ставит зависимости
+lint — проверяет код на ошибки (лёгкая версия, чтобы не ругался на всё подряд)
+test — запускает тесты (pytest проходит)
+build — собирает Docker-образ и пушит его в ghcr.io (GitHub Container Registry)
+Всё это запускается автоматически при пуше в main.
+
+
+
+
