@@ -37,17 +37,17 @@ Lint и test работают параллельно для оптимизаци
 - Параллельные джобы — lint и test запускаются одновременно
 - Docker-образ тут: https://github.com/serjiy/weather-app/packages
 
-Что было сделано:
+##№ Что было сделано:
 
-Создал репозиторий на GitHub: https://github.com/serjiy/weather-app
-Взял исходный проект https://github.com/AnastasiyaGapochkina01/wheather-app и перенёс его к себе.
-Добавил Dockerfile — для запуска в контейнере.
-Настроил GitHub Actions (это CI/CD) — файл .github/workflows/ci-cd.yml
+- Создал репозиторий на GitHub: https://github.com/serjiy/weather-app
+- Взял исходный проект https://github.com/AnastasiyaGapochkina01/wheather-app и перенёс его к себе.
+- Добавил Dockerfile — для запуска в контейнере.
+- Настроил GitHub Actions (это CI/CD) — файл .github/workflows/ci-cd.yml
 Pipeline делает следующее:
-install — ставит зависимости
-lint — проверяет код на ошибки (лёгкая версия, чтобы не ругался на всё подряд)
-test — запускает тесты (pytest проходит)
-build — собирает Docker-образ и пушит его в ghcr.io (GitHub Container Registry)
+- install — ставит зависимости
+- lint — проверяет код на ошибки (лёгкая версия, чтобы не ругался на всё подряд)
+- test — запускает тесты (pytest проходит)
+- build — собирает Docker-образ и пушит его в ghcr.io (GitHub Container Registry)
 Всё это запускается автоматически при пуше в main.
 
 
