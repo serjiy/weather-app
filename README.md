@@ -37,7 +37,7 @@ Lint и test работают параллельно для оптимизаци
 - Параллельные джобы — lint и test запускаются одновременно
 - Docker-образ тут: https://github.com/serjiy/weather-app/packages
 
-##№ Что было сделано:
+### Что было сделано:
 
 - Создал репозиторий на GitHub: https://github.com/serjiy/weather-app
 - Взял исходный проект https://github.com/AnastasiyaGapochkina01/wheather-app и перенёс его к себе.
